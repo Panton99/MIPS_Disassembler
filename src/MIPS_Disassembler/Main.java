@@ -1,4 +1,4 @@
-//Jisoo Kim 2022 Summer
+//Jisoo Kim 06/20/2022
 package MIPS_Disassembler;
 
 public class Main {
