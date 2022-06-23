@@ -4,6 +4,8 @@ package MIPS_Disassembler;
 public class Disassembler {
     InstructionSet is = new InstructionSet();
     private String mips;
+    private int branchAddress;
+    private int binAddress;
 
     public void instructInfoDisassemble() {
         for (int i=0; i < is.getInstruction().length; i++) {
@@ -14,7 +16,7 @@ public class Disassembler {
             is.setDestReg((is.getInstruction()[i] & 0x0000F800) >>> 11); //set destination register
             is.setOffSet((short)((is.getInstruction()[i] & 0x0000FFFF))); //set offset
             is.setFunc((is.getInstruction()[i] & 0x0000003F)); //set function
-            is.setAddress(((is.getOffSet()) << 2) + is.getAddress() + 4); //decompressed and increment to find target address
+            binAddress = is.getAddress() + 0x00000004*i;  //Get the address from initial address(incrementing by 4)
 
             //R format
             if((is.getOpCode() == 0) && (is.getFunc() == 32)) {
@@ -38,16 +40,16 @@ public class Disassembler {
             }
             if((is.getOpCode() == 0x04)) {
                 mips = "beq";
+                branchAddress = ((is.getOffSet()<<2) + 0x00000004 + binAddress); //To get the target address of branch instruction
             }
             if((is.getOpCode() == 0x2B)) {
                 mips = "sw";
             }
             if((is.getOpCode() == 0x05)) {
                 mips = "bne";
+                branchAddress = ((is.getOffSet() << 2) + 0x00000004 + binAddress); //To get the target address of branch instruction
             }
-            int binAddress = is.getInstruction()[i]; //Get the instruction address
             String binAddString = Integer.toHexString(binAddress); //binary to hexadecimal string
-            int branchAddress = (is.getAddress()); //Get the target address of branching
             String branchAddString = Integer.toHexString(branchAddress); //binary to hexadecimal string
 
             //R format output
@@ -60,7 +62,7 @@ public class Disassembler {
             }
             //I format branching output
             if(is.getOpCode() ==4 || is.getOpCode() ==5) {
-                System.out.println(binAddString.toUpperCase() +" " + mips + " $" + is.getSrc1Reg() +",$" + is.getSrc2Reg() + ", address "+ branchAddString.toUpperCase() );
+                System.out.println(binAddString.toUpperCase() +" " + mips + " $" + is.getSrc1Reg() +",$" + is.getSrc2Reg() + ", address "+ branchAddString );
             }
         }
     }
