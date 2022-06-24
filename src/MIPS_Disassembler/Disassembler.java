@@ -40,7 +40,7 @@ public class Disassembler {
             }
             if((is.getOpCode() == 0x04)) {
                 mips = "beq";
-                branchAddress = ((is.getOffSet()<<2) + 0x00000004 + binAddress); //To get the target address of branch instruction
+                branchAddress = ((is.getOffSet() << 2) + 0x00000004 + binAddress); //To get the target address of branch instruction
             }
             if((is.getOpCode() == 0x2B)) {
                 mips = "sw";
