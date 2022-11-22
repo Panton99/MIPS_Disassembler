@@ -1,12 +1,12 @@
 # MIPS_Disassembler 
 
-1. What is this project about?
+1. Project name
 This project was to make partial disassembler for MIPS instructions.
 
-2. What is my goal?
+2. About
 My goal is to disassemble 32-bit machine instructions.
 
-3. Methods
+3. Instructions
 Source instructions : add, sub, and, or, slt, lw, sw, beq, bne
 Input : 32-bit instructions
 Output : Address(Hexadecimal), numerical registers, offset value, destination address.
